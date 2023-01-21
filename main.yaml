@@ -1,0 +1,33 @@
+- hosts: suse_rancher
+  become: true
+  tasks:
+  - name: "Install Docker"
+    package:
+      name: "docker"
+      state: present
+
+  - name: "Start and Enable Docker Service"
+    service:
+      name: "docker"
+      state: started
+      enabled: yes
+
+  - name: "install pip3"
+    package:
+      name: "python3-pip"
+      state: present
+      
+  - name: "docker library install"
+    pip:
+      name: "docker"
+      executable: pip3
+
+  - name: "setup suse rancher"
+    docker_container:
+      name: "suse-rancher-con"
+      image: "rancher/rancher"
+      ports:
+      - "80:80"
+      - "443:443"
+      restart_policy: unless-stopped
+      privileged: yes
