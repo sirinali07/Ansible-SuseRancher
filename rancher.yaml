@@ -6,10 +6,10 @@
     k8s_version: v1.20.10-rancher1-1
   tasks:
   - name: Update package lists
-    apt: update_cache=yes
+    yum: update_cache=yes
 
   - name: Install Docker
-    apt: name=docker.io state=present
+    yum: name=docker.io state=present
 
   - name: Start and enable Docker service
     service: name=docker state=started enabled=yes
