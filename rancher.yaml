@@ -1,0 +1,38 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    rancher_version: v2.4.8
+    k8s_version: v1.20.10-rancher1-1
+  tasks:
+  - name: Update package lists
+    apt: update_cache=yes
+
+  - name: Install Docker
+    apt: name=docker.io state=present
+
+  - name: Start and enable Docker service
+    service: name=docker state=started enabled=yes
+
+  - name: Download Rancher
+    command: wget https://github.com/rancher/rancher/releases/download/{{ rancher_version }}/rancher-{{ rancher_version }}.tar.gz
+
+  - name: Extract Rancher
+    command: tar xvzf rancher-{{ rancher_version }}.tar.gz
+
+  - name: Run Rancher
+    command: docker run -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher:{{ rancher_version }}
+
+  - name: Install Rancher CLI
+    command: curl -L https://github.com/rancher/cli/releases/download/v2.4.3/rancher-linux-amd64-v2.4.3.tar.gz | tar xz
+
+  - name: Add Rancher CLI to PATH
+    command: export PATH=$PATH:$PWD/rancher-v2.4.3/
+
+  - name: Create a Kubernetes cluster in Rancher
+    command: rancher kubectl create -f cluster.yml
+
+  - name: Wait for the cluster to be ready
+    command: rancher kubectl wait --for=condition=Ready node/{{ item }} --timeout=900s
+    with_items: "{{ groups['k8s_nodes'] }}"
+
