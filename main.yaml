@@ -19,7 +19,7 @@
       
   - name: "docker library install"
     pip:
-      name: "docker"
+      name: "dockerd"
       executable: pip3
 
   - name: "setup suse rancher"
