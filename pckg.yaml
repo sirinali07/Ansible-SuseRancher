@@ -6,6 +6,7 @@
      yum:
        name: "{{ item }}"
        state: present
+   - name: starting services 
      services:
        name: "{{ item }}"
        state: started
