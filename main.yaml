@@ -8,7 +8,7 @@
 
   - name: "Start and Enable Docker Service"
     service:
-      name: "docker"
+      name: "dockerd"
       state: started
       enabled: yes
 
@@ -19,7 +19,7 @@
       
   - name: "docker library install"
     pip:
-      name: "dockerd"
+      name: "docker"
       executable: pip3
 
   - name: "setup suse rancher"
