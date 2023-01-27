@@ -6,6 +6,9 @@
      yum:
        name: "{{ item }}"
        state: present
+     services:
+       name: "{{ item }}"
+       state: started
      with_items:
        - httpd
        - mysql
