@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Adding a number of users
+      user: name={{ item }} state=present
+      with_items:
+        - userX
+        - userY
+        - userZ
