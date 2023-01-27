@@ -10,6 +10,9 @@
 
   - name: Install Docker
     yum: name=docker state=present
+   
+  - name: Install wget
+    yum: name=wget,curl
 
   #- name: Start and enable Docker service
   # service: name=dockerd state=started enabled=yes
