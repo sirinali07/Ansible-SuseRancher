@@ -11,8 +11,8 @@
   - name: Install Docker
     yum: name=docker state=present
 
-  - name: Start and enable Docker service
-    service: name=dockerd state=started enabled=yes
+  #- name: Start and enable Docker service
+  # service: name=dockerd state=started enabled=yes
 
   - name: Download Rancher
     command: wget https://github.com/rancher/rancher/releases/download/{{ rancher_version }}/rancher-{{ rancher_version }}.tar.gz
