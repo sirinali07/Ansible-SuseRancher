@@ -7,7 +7,7 @@
        name: "{{ item }}"
        state: present
    - name: starting services 
-     services:
+     service:
        name: "{{ item }}"
        state: started
      with_items:
