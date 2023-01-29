@@ -21,7 +21,7 @@
   # service: name=dockerd state=started enabled=yes
 
   - name: Download Rancher
-    command: https://github.com/rancher/rancher/archive/refs/tags/v2.7.1.tar.gz
+    command: wget https://github.com/rancher/rancher/archive/refs/tags/v2.7.1.tar.gz
     #wget https://github.com/rancher/rancher/releases/download/{{ rancher_version }}/rancher-{{ rancher_version }}.tar.gz
 
   - name: Extract Rancher
