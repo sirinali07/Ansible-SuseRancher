@@ -18,10 +18,11 @@
   # service: name=dockerd state=started enabled=yes
 
   - name: Download Rancher
-    command: wget https://github.com/rancher/rancher/releases/download/{{ rancher_version }}/rancher-{{ rancher_version }}.tar.gz
+    command: https://github.com/rancher/rancher/archive/refs/tags/v2.7.1.tar.gz
+    #wget https://github.com/rancher/rancher/releases/download/{{ rancher_version }}/rancher-{{ rancher_version }}.tar.gz
 
   - name: Extract Rancher
-    command: tar xvzf rancher-{{ rancher_version }}.tar.gz
+    command: tar xvzf v2.7.1.tar.gz
 
   - name: Run Rancher
     command: docker run -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher:{{ rancher_version }}
