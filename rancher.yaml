@@ -12,7 +12,10 @@
     yum: name=docker state=present
    
   - name: Install wget and curl packages
-    yum: name=[wget, curl] 
+    yum: name=wget
+    
+  - name: Install wget and curl packages
+    yum: name=curl 
 
   #- name: Start and enable Docker service
   # service: name=dockerd state=started enabled=yes
