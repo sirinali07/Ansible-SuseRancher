@@ -1,0 +1,12 @@
+- hosts: suse_rancher
+  become: true
+  tasks:
+  - name: "setup suse rancher"
+    docker_container:
+      name: "suse-rancher-con"
+      image: "rancher/rancher:latest"
+      ports:
+      - "80:80"
+      - "443:443"
+      restart_policy: unless-stopped
+      privileged: yes
