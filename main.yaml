@@ -7,7 +7,7 @@
       state: present
       
   - name: Ensure service is enabled
-    command: sudo systemctl start docker
+    command: systemctl restart docker
       
   - name: "install pip3"
     yum:
