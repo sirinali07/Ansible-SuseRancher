@@ -3,7 +3,7 @@
   tasks:
   - name: "Install Docker"
     yum:
-      name: "docker"
+      name: "docker-ce"
       state: present
       
   - name: Ensure service is enabled
