@@ -1,5 +1,5 @@
 - hosts: suse_rancher
-  become: true
+  become: yes
   tasks:
   - name: "Install Docker"
     yum:
