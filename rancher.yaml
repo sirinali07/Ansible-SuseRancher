@@ -17,8 +17,8 @@
   - name: Install wget and curl packages
     yum: name=curl 
 
-  - name: Start and enable Docker service
-    service: name=docker state=started enabled=yes
+ #- name: Start and enable Docker service
+   # service: name=docker state=started enabled=yes
 
   - name: Download Rancher
     command: wget https://github.com/rancher/rancher/archive/refs/tags/v2.7.1.tar.gz
