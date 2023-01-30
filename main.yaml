@@ -5,6 +5,10 @@
     yum:
       name: "docker"
       state: present
+      
+  - name: Ensure service is enabled
+    command: service docker restart
+      
   - name: "install pip3"
     yum:
       name: "python3-pip"
