@@ -6,10 +6,10 @@
       name: "docker"
       state: present
       
-  - name: Ensure service is enabled
-    service:
-      name: "docker"
-      state: started
+  #- name: Ensure service is enabled
+   # service:
+    # name: "docker"
+    #  state: started
       
   - name: "install pip3"
     yum:
