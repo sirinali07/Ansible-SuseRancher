@@ -31,7 +31,7 @@
     command: docker run -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher:{{ rancher_version }}
 
   - name: Install Rancher CLI
-    command: curl -L https://github.com/rancher/cli/archive/refs/tags/v2.7.0.tar.gz | tar xz
+    command: curl -L https://github.com/rancher/cli/archive/refs/tags/v2.7.0.tar.gz 
     #curl -L https://github.com/rancher/cli/releases/download/v2.4.3/rancher-linux-amd64-v2.4.3.tar.gz | tar xz
 
   - name: Add Rancher CLI to PATH
