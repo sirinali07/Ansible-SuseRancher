@@ -7,7 +7,9 @@
       state: present
       
   - name: Ensure service is enabled
-    shell: "systemctl restart docker"
+    service:
+      name: "docker"
+      state: started
       
   - name: "install pip3"
     yum:
