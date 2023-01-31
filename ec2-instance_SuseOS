@@ -1,0 +1,61 @@
+---
+- hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: Get region of instance
+      uri:
+        url: http://169.254.169.254/latest/dynamic/instance-identity/document
+      register: doc
+
+    - name: Get keypair of instance
+      shell: curl -w '\n' http://169.254.169.254/latest/meta-data/public-keys/ | cut -c 3-100
+      register: kp
+
+
+    - name: Get subnet id of instance
+      shell: curl --silent http://169.254.169.254/latest/meta-data/network/interfaces/macs/$(curl --silent http://169.254.169.254/latest/meta-data/network/interfaces/macs/)/subnet-id
+      register: subnet
+
+    - name: Get security group of instance
+      shell: curl --silent http://169.254.169.254/latest/meta-data/network/interfaces/macs/$(curl --silent http://169.254.169.254/latest/meta-data/network/interfaces/macs/)/security-group-ids/
+      register: secgrp
+
+    - name: Generate SSH keypair
+      openssh_keypair:
+        force: yes
+        path: /home/ec2-user/.ssh/id_rsa
+
+    - name: Get the public key
+      shell: cat /home/ec2-user/.ssh/id_rsa.pub
+      register: pubkey
+
+    - name: Create EC2 instance
+      ec2:
+        key_name: "{{ kp.stdout }}"
+        group_id: "{{ secgrp.stdout }}"
+        instance_type: t2.xlarge
+        image: "ami-0c544bda9765444c2"     ##suse linux
+        count: 1
+        wait: true
+        region: "{{ doc.json.region }}"
+        instance_tags:
+          Name: suse-rancher
+        vpc_subnet_id: "{{ subnet.stdout }}"
+        assign_public_ip: yes
+        user_data: |
+                #!/bin/bash
+                echo "{{ pubkey.stdout }}" >> /home/ec2-user/.ssh/authorized_keys
+      register: ec2var
+
+    - name: Make ansible directory
+      file:
+        path: /etc/ansible
+        state: directory
+      become: yes
+
+    - debug:
+        var: ec2var.instances[0].private_ip
+
+    - debug:
+        var: ec2var.instances[1].private_ip
